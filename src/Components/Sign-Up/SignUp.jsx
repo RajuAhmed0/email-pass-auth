@@ -1,8 +1,9 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import React, { useState } from 'react';
 import auth from '../Firebase/Firebase.utils';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const [errorMsg, setErrorMsg] = useState('');
@@ -32,8 +33,10 @@ const SignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                sendEmailVerification(auth.currentUser)
+                .then(result => toast.success('Please check your email and varyfied'))
                 setIsSuccess('Account Created Successfully');
-                navigate("/signUp")
+                navigate("/signIn")
 
             })
             .catch(err => setErrorMsg(err.message));

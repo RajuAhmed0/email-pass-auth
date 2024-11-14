@@ -1,7 +1,13 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../Firebase/Firebase.utils';
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
+
     const navList = <>
         <li>
             <Link to={'/'}> Home</Link>
@@ -12,7 +18,21 @@ const Navbar = () => {
         <li>
             <Link to={'/signUp'}>Sign Up</Link>
         </li>
+
     </>
+
+    const handleLogOutBtn = () => {
+        signOut(auth)
+            .then(result => {
+                toast.success('Log Out Successfully')
+                navigate('/signIn')
+            })
+            .catch((error) => {
+                console.log(error);
+
+            });
+    };
+
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -45,7 +65,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <button onClick={handleLogOutBtn} className="btn">Log Out</button>
             </div>
         </div>
     );
