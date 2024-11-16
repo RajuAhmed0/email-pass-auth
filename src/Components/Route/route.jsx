@@ -3,6 +3,8 @@ import Layout from "../Layout/Layout";
 import Home from "../Home/Home";
 import SignIn from "../Sign-In/SignIn";
 import SignUp from "../Sign-Up/SignUp";
+import PrivateRoutes from "./PrivateRoutes";
+import Product from "../Product/Product";
 
  const route = createBrowserRouter([
 
@@ -17,6 +19,10 @@ import SignUp from "../Sign-Up/SignUp";
             {
                 path:"/signIn",
                 element:<SignIn></SignIn>,
+            },
+            {
+                path:"/product",
+                element:<PrivateRoutes><Product></Product></PrivateRoutes>
             },
             {
                 path:"/signUp",

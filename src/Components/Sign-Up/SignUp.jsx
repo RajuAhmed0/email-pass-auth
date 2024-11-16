@@ -1,11 +1,15 @@
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, {useContext, useState } from 'react';
 import auth from '../Firebase/Firebase.utils';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Context } from '../Provider/AuthContext';
+
 
 const SignUp = () => {
+
+    const {register} = useContext(Context);
     const [errorMsg, setErrorMsg] = useState('');
     const [isSuccess, setIsSuccess] = useState('');
     const [isShow, setIsShow] = useState(false);
@@ -30,13 +34,14 @@ const SignUp = () => {
         }
 
 
-        createUserWithEmailAndPassword(auth, email, password)
+        register( email, password)
             .then(result => {
                 console.log(result.user);
-                sendEmailVerification(auth.currentUser)
-                .then(result => toast.success('Please check your email and varyfied'))
+                // sendEmailVerification(auth.currentUser)
+                // .then(result => toast.success('Please check your email and varyfied'))
+                // .catch(err => console.log(err))
                 setIsSuccess('Account Created Successfully');
-                navigate("/signIn")
+                // navigate("/signIn")
 
             })
             .catch(err => setErrorMsg(err.message));

@@ -1,11 +1,12 @@
 import { signOut } from 'firebase/auth';
-import React from 'react';
+import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../Firebase/Firebase.utils';
+import { Context } from '../Provider/AuthContext';
 
 const Navbar = () => {
-
+    const { user } = useContext(Context)
     const navigate = useNavigate();
 
     const navList = <>
@@ -65,7 +66,13 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button onClick={handleLogOutBtn} className="btn">Log Out</button>
+                {user ? <>
+                    <h1>{user.email}</h1>
+                    <button onClick={handleLogOutBtn} className="btn">Log out</button>
+                </>:
+                <Link to={'/signIn'} className="btn">Login</Link>
+                }
+                
             </div>
         </div>
     );
